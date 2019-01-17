@@ -11,11 +11,6 @@
  *      Notes:
  *          - This Library was meant to configure LoRaWAN node to the AU915 Frequency Plan
  * 
- *      Known Bugs: 
- *          - The testConfig function does not work on Arduino Nano due to a bug that always 
- *            do the reconfiguration 
- * 
- * 
  *  (pt-br)
  *      Esta Biblioteca foi desenvolvida para configurar e usar qualquer
  *      nó LoRaWAN que use comandos AT.
@@ -23,9 +18,6 @@
  *      Notas:
  *          - Esta Biblioteca foi idealizada para configurar nós no Plano de Frequência AU915 // na frequencia AU915
  * 
- *      Bugs Conhecidos:
- *          - A função testConfig não funciona no Arduino Nano, sempre que chamada
- *            ela reconfigura o nó
  */
 
 //#define DebugMode // Uncomment to activate the Serial Debug
@@ -291,8 +283,6 @@ bool LoRaAT::compare(String cmd, String ans) {
         response += temp;
     }
 
-    delay(300);
-
     int x = 0;
 
     #ifdef DebugMode
@@ -324,53 +314,58 @@ void LoRaAT::testConfig() {
 
     SerialDebug.println("\n----------------------------------------\n        Starting Config Test:\n");
 
+    SerialDebug.print("DevAddr: ");
     if (compare("at+id=devaddr", "+ID: DevAddr, " + _DevAddr)) {
-        SerialDebug.println("DevAddr: pass");
+        SerialDebug.print("pass");
         ok++;
         ntest++;
     }else {
-        SerialDebug.println("Reconfiguring DevAddr....");
+        SerialDebug.print("fail\nReconfiguring DevAddr....");
         sendCmd("at+id=devaddr, " + _DevAddr);
         ntest++;
     }
 
+    SerialDebug.print("\nDevEui: ");
     if (compare("at+id=deveui", "+ID: DevEui, " + _DevEui)) {
-        SerialDebug.println("DevEui: pass");
+        SerialDebug.print("pass");
         ok++;
         ntest++;
     }else {
-        SerialDebug.println("Reconfiguring DevEui....");
+        SerialDebug.print("fail\nReconfiguring DevEui....");
         sendCmd("at+id=deveui, " + _DevEui);
         ntest++;
     }
 
+    SerialDebug.print("\nAppEui: ");
     if (compare("at+id=appeui", "+ID: AppEui, " + _AppEui)) {
-        SerialDebug.println("AppEui: pass");
+        SerialDebug.print("pass");
         ok++;
         ntest++;
     }else {
-        SerialDebug.println("Reconfiguring AppEui....");
+        SerialDebug.print("fail\nReconfiguring AppEui....");
         sendCmd("at+id=appeui, " + _AppEui);
         ntest++;
     }
 
+    SerialDebug.print("\nDR: ");
     if (compare("at+dr", "+DR: DR0\n+DR: AU915 DR0  SF12 BW125K")){
-        SerialDebug.println("DR: pass");
+        SerialDebug.print("pass");
         ok++;
         ntest++;
     }else {
-        SerialDebug.println("Reconfiguring DR....");
+        SerialDebug.print("fail\nReconfiguring DR....");
         DRConfig();
         ntest++;
     }
 
     delay(300);
-    if (compare("at+ch", "+CH: 8; 0,916800000,DR0,DR3;")) {
-        SerialDebug.println("CH: pass");
+    SerialDebug.print("\nCH: ");
+    if (compare("at+ch", "+CH: 8; 0,916800000")) {
+        SerialDebug.print("pass");
         ok++;
         ntest++;
     }else {
-        SerialDebug.println("Reconfiguring CH....");
+        SerialDebug.print("fail\nReconfiguring CH....\n");
         CHConfig();
         ntest++;
     }

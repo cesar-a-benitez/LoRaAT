@@ -11,11 +11,6 @@
  *      Notes:
  *          - This Library was meant to configure LoRaWAN node to the AU915 Frequency Plan
  * 
- *      Known Bugs: 
- *          - The testConfig function does not work on Arduino Nano due to a bug that always 
- *            do the reconfiguration 
- * 
- * 
  *  (pt-br)
  *      Esta Biblioteca foi desenvolvida para configurar e usar qualquer
  *      nó LoRaWAN que use comandos AT.
@@ -23,9 +18,6 @@
  *      Notas:
  *          - Esta Biblioteca foi idealizada para configurar nós no Plano de Frequência AU915 // na frequencia AU915
  * 
- *      Bugs Conhecidos:
- *          - A função testConfig não funciona no Arduino Nano, sempre que chamada
- *            ela reconfigura o nó
  */
 
 #ifndef LoRaAT_h
