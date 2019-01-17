@@ -354,7 +354,7 @@ void LoRaAT::testConfig() {
         ntest++;
     }
 
-    if (compare("at+dr", "+DR: DR0\n+DR: US915 DR0  SF10 BW125K")){
+    if (compare("at+dr", "+DR: DR0\n+DR: AU915 DR0  SF12 BW125K")){
         SerialDebug.println("DR: pass");
         ok++;
         ntest++;
