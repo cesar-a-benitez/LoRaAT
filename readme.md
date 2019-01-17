@@ -130,7 +130,7 @@ Itaipu Technological Park (PTI)
       setAppSkey(String AppSkey);   // Pass the AppSkey String to the object - Para a String do AppSkey para o objeto
       
       setIDs(String DevAddr, String DevEui, String AppEui); // Pass all the IDs together to the object - Passa todos IDs juntos para o objeto
-      void setKeys(String NwkSkey, String AppSkey); // Pass all the Keys together to the object - Passa todas as Keys juntas para o objeto
+      setKeys(String NwkSkey, String AppSkey); // Pass all the Keys together to the object - Passa todas as Keys juntas para o objeto
       
       // Node Configuration Functions - Funções de Configuração dos Nós
       config();       // Configure the node with the configurations passed - Configura o nó com as configurações passadas
