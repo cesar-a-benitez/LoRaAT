@@ -178,8 +178,8 @@ void LoRaAT::DRConfig() {
     sendCmd("AT+ADR=ON");
     sendCmd("AT");
 
-    // Set the US915 DR Scheme
-    sendCmd("AT+DR=US915");
+    // Set the AU915 DR Scheme
+    sendCmd("AT+DR=AU915");
     
     delay(200);
 }
