@@ -28,6 +28,12 @@ LoRaAT::LoRaAT(int rx, int tx) {
     // Set Rx and Tx ports
     _rx = rx;
     _tx = tx;
+
+    _DevAddr = "";
+    _DevEui = "";
+    _AppEui = "";
+    _NwkSkey = "";
+    _AppSkey = "";
 }
 
 void LoRaAT::init() {
@@ -147,9 +153,25 @@ void LoRaAT::config() {
      */
     
     sendCmd("AT");
-    sendCmd("AT+ID=DevAddr, " + _DevAddr);
-    sendCmd("AT+ID=DevEui, " + _DevEui);
-    sendCmd("AT+ID=AppEui, " + _AppEui);
+    if(_DevAddr != ""){
+        sendCmd("AT+ID=DevAddr, " + _DevAddr);
+    }
+    
+    if(_DevEui != "") {
+        sendCmd("AT+ID=DevEui, " + _DevEui);
+    }
+
+    if(_AppEui != "") {
+        sendCmd("AT+ID=AppEui, " + _AppEui);
+    }
+
+    if(_NwkSkey != ""){
+        sendCmd("AT+KEY=NWKSKEY, " + _NwkSkey);
+    }
+
+    if(_AppSkey != ""){
+        sendCmd("AT+KEY=APPSKEY, " + _AppSkey);
+    }
 
     /**
      * Calling the functions responsables to configure DR (DataRate) and CH (Channels)
@@ -314,37 +336,59 @@ void LoRaAT::testConfig() {
 
     SerialDebug.println("\n----------------------------------------\n        Starting Config Test:\n");
 
-    SerialDebug.print("DevAddr: ");
-    if (compare("at+id=devaddr", "+ID: DevAddr, " + _DevAddr)) {
-        SerialDebug.print("pass");
-        ok++;
-        ntest++;
-    }else {
-        SerialDebug.print("fail\nReconfiguring DevAddr....");
-        sendCmd("at+id=devaddr, " + _DevAddr);
-        ntest++;
+    if(_DevAddr != "") {
+        SerialDebug.print("DevAddr: ");
+        if (compare("at+id=devaddr", "+ID: DevAddr, " + _DevAddr)) {
+            SerialDebug.print("pass");
+            ok++;
+            ntest++;
+        }else {
+            SerialDebug.print("fail\nReconfiguring DevAddr....");
+            sendCmd("at+id=devaddr, " + _DevAddr);
+            ntest++;
+        }
     }
 
-    SerialDebug.print("\nDevEui: ");
-    if (compare("at+id=deveui", "+ID: DevEui, " + _DevEui)) {
-        SerialDebug.print("pass");
-        ok++;
-        ntest++;
-    }else {
-        SerialDebug.print("fail\nReconfiguring DevEui....");
-        sendCmd("at+id=deveui, " + _DevEui);
-        ntest++;
+    if(_DevEui != "") {
+        SerialDebug.print("\nDevEui: ");
+        if (compare("at+id=deveui", "+ID: DevEui, " + _DevEui)) {
+            SerialDebug.print("pass");
+            ok++;
+            ntest++;
+        }else {
+            SerialDebug.print("fail\nReconfiguring DevEui....");
+            sendCmd("at+id=deveui, " + _DevEui);
+            ntest++;
+        }
     }
 
-    SerialDebug.print("\nAppEui: ");
-    if (compare("at+id=appeui", "+ID: AppEui, " + _AppEui)) {
-        SerialDebug.print("pass");
+    if(_AppEui != "") {
+        SerialDebug.print("\nAppEui: ");
+        if (compare("at+id=appeui", "+ID: AppEui, " + _AppEui)) {
+            SerialDebug.print("pass");
+            ok++;
+            ntest++;
+        }else {
+            SerialDebug.print("fail\nReconfiguring AppEui....");
+            sendCmd("at+id=appeui, " + _AppEui);
+            ntest++;
+        }
+    }
+
+    if(_NwkSkey != ""){
+        SerialDebug.print("\nNwkSKey: pass");
+        sendCmd("AT+KEY=NWKSKEY, " + _NwkSkey);
         ok++;
         ntest++;
-    }else {
-        SerialDebug.print("fail\nReconfiguring AppEui....");
-        sendCmd("at+id=appeui, " + _AppEui);
+        delay(100);
+    }
+
+    if(_AppSkey != ""){
+        SerialDebug.print("\nAppSKey: pass");
+        sendCmd("AT+KEY=APPSKEY, " + _AppSkey);
+        ok++;
         ntest++;
+        delay(100);
     }
 
     SerialDebug.print("\nDR: ");
