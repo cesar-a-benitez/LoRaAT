@@ -114,7 +114,7 @@ Itaipu Technological Park (PTI)
   }
   ```
   
-  
+  ***
   ## Functions List (Lista de Funções):
   ```cpp
   {
