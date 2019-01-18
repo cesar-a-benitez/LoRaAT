@@ -11,6 +11,12 @@ Itaipu Technological Park (PTI)
 
     Notes:
       - This Library was meant to configure LoRaWAN node to the AU915 Frequency Plan
+      - The Library initiates Serial Communication with a baud rate of 9600, if you 
+      initiate the communication again in the code there may be a crash.
+      
+    Known Bugs:
+      - The testConfig Function doesn't work in Arduino Nano, it'll always reconfigure
+      the node
           
 
   (pt-br)
@@ -19,6 +25,11 @@ Itaipu Technological Park (PTI)
  
     Notas:
       - Esta Biblioteca foi idealizada para configurar nós no Plano de Frequência AU915
+      - A Biblioteca inicia a Comunicação Serial com um baud rate de 9600, se você inicar
+      a comunicação novamente no código pode vir a ocorrer travamentos.
+      
+    Bugs Conhecidos:
+      - A Função testConfig não funciona no Arduino Nano, ele sempre irá reconfigurar o nó
           
 
 ***
