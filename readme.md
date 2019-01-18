@@ -15,8 +15,7 @@ Itaipu Technological Park (PTI)
       initiate the communication again in the code there may be a crash.
       
     Known Bugs:
-      - The testConfig Function doesn't work in Arduino Nano, it'll always reconfigure
-      the node
+      - The testConfig Function doesn't work in Arduino Nano, it'll always reconfigure the node
           
 
   (pt-br)
