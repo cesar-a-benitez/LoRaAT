@@ -23,7 +23,6 @@
 //#define DebugMode // Uncomment to activate the Serial Debug
 #include "LoRaAT.h"
 
-
 LoRaAT::LoRaAT(int rx, int tx) {
     // Set Rx and Tx ports
     _rx = rx;
