@@ -243,21 +243,25 @@ void LoRaAT::loop() {
 
 void LoRaAT::sendMsg(String msg) {
     // Send Message Function
+    msg = '"' + msg + '"';
     sendCmd("AT+MSG=" + msg);
 }
 
 void LoRaAT::sendCMsg(String msg) {
     // Send Confirmed Message Function
+    msg = '"' + msg + '"';
     sendCmd("AT+CMSG=" + msg);
 }
 
 void LoRaAT::sendMsgHex(String msg) {
     // Send HEX Message Function
+    msg = '"' + msg + '"';
     sendCmd("AT+MSGHEX=" + msg);
 }
 
 void LoRaAT::sendCMsgHex(String msg) {
     // Send Confirmed HEX Message Function
+    msg = '"' + msg + '"';
     sendCmd("AT+CMSGHEX=" + msg);
 }
 
@@ -297,10 +301,6 @@ bool LoRaAT::compare(String cmd, String ans) {
     char temp;
 
     while (LoRaNode->available()) {
-        loraread:
-        #ifdef DebugMode
-            SerialDebug.write(LoRaNode->read());
-        #endif
         temp = LoRaNode->read();
         response += temp;
     }
