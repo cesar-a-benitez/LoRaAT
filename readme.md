@@ -94,7 +94,7 @@ Itaipu Technological Park (PTI)
    {
       lora.config(); // Function to configure the node - Função para configurar o nó
       
-      lora.testConfig); // Function to test the configuration and reconfigure if needed
+      lora.testConfig(); // Function to test the configuration and reconfigure if needed
                         // Função para testar as configurações e reconfigurar se necessário
    }
    ```
