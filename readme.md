@@ -162,6 +162,7 @@ Itaipu Technological Park (PTI)
       waitMsg();    // Wait the answer and print in via Serial - Espera a mensagem e imprime via Serial
       waitAnsMsg(); // Wait and return the answer - Espera e retorna a mensagem - (delay = timedelay*2)
       waitACK();    // Function that returns true if an ACK has been received or false if not received
+                    // Função que retorna verdadeiro se um ACK foi recebido ou falso se não recebido
 }
 ```
 
