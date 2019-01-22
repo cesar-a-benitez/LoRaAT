@@ -40,13 +40,17 @@ Itaipu Technological Park (PTI)
      (pt-br) Adicione a biblioteca ao código fonte
       
    ```cpp 
-   #include <LoRaAT.h>
+   {
+      #include <LoRaAT.h>
+   }
    ```
   3. (en) Create an object  
      (pt-br) Crie um objeto
      
-   ```cpp {
-   LoRaAT lora(rx, tx);
+   ```cpp 
+   {
+      LoRaAT lora(rx, tx);
+   }
    ```
     Notes (Notas):
       (en) At the creation of the object you will need to set the Rx and Tx ports that you want to use
