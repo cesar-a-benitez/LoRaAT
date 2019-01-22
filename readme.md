@@ -46,7 +46,7 @@ Itaipu Technological Park (PTI)
      (pt-br) Crie um objeto
      
    ```cpp {
-	 LoRaAT lora(rx, tx);
+   LoRaAT lora(rx, tx);
    ```
     Notes (Notas):
       (en) At the creation of the object you will need to set the Rx and Tx ports that you want to use
