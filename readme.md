@@ -3,7 +3,7 @@ Library created by: Cesar Augusto B. Barbosa e Thiago Piovesan
 Latin American Center for Open Technologies (CELTAB)    
 Itaipu Technological Park (PTI)
 
-  ***
+***
 ## About Library (Sobre a Biblioteca):
   (en)
     This Library was designed to configure and use any LoRaWAN node
@@ -99,8 +99,8 @@ Itaipu Technological Park (PTI)
    }
    ```
    
-   ***
-   ## Sending Messages (Enviando Mensagens):
+***
+## Sending Messages (Enviando Mensagens):
    (en)  
    The Library supports 4 types of messages to send:  
    * String Message  
@@ -124,8 +124,8 @@ Itaipu Technological Park (PTI)
   }
   ```
   
-  ***
-  ## Functions List (Lista de Funções):
+***
+## Functions List (Lista de Funções):
   ```cpp
   {
       // Object Configuration Functions - Funções de Configuração do Objeto
@@ -161,5 +161,7 @@ Itaipu Technological Park (PTI)
       // Wait Message Function - Função de Espera de Mensagem
       waitMsg();    // Wait the answer and print in via Serial - Espera a mensagem e imprime via Serial
       waitAnsMsg(); // Wait and return the answer - Espera e retorna a mensagem - (delay = timedelay*2)
+      waitACK();    // Function that returns true if an ACK has been received or false if not received
 }
 ```
+

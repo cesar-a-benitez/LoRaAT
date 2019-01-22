@@ -23,6 +23,7 @@
 //#define DebugMode // Uncomment to activate the Serial Debug
 #include "LoRaAT.h"
 
+
 LoRaAT::LoRaAT(int rx, int tx) {
     // Set Rx and Tx ports
     _rx = rx;
@@ -285,6 +286,55 @@ String LoRaAT::waitAnsMsg() {
     return response;
 }
 
+bool LoRaAT::waitACK() {
+    // Function that returns true if an ACK has been received or false if not received
+    LoRaNode->flush();
+
+    delay(_timeDelay*2);
+
+    String response = "", done = "+CMSG: Done", ans = "+CMSG: ACK Received";
+    char temp;
+    int x = 0, y = 0;
+
+    while (true) {
+        while (LoRaNode->available()) {
+            #ifdef DebugMode
+                SerialDebug.write(LoRaNode->read());
+            #endif
+            temp = LoRaNode->read();
+            response += temp;
+        }
+
+        for (int i = 0; i < response.length(); i++) {
+            if(response.charAt(i) == ans.charAt(x)){
+                if (x == ans.length()-1) {
+                    #ifdef DebugMode
+                        SerialDebug.println(response);
+                    #endif
+
+                    return true;
+                }else {
+                    x++;
+                }
+            }
+
+            if(response.charAt(i) == done.charAt(y)) {
+                if (y == done.length()-1) {
+                    #ifdef DebugMode
+                        SerialDebug.println(response);
+                    #endif
+
+                    return false;
+                }else {
+                    y++;
+                }
+            }
+        }
+
+        delay(500);
+    }
+} // end waitACK
+
 bool LoRaAT::compare(String cmd, String ans) {
     // Function responsable to do the comparison between the actual configuration
     // and the desired one
@@ -314,6 +364,7 @@ bool LoRaAT::compare(String cmd, String ans) {
     for (int i = 0; i < response.length(); i++) {
         if(response.charAt(i) == ans.charAt(x)){
             if (x == ans.length()-1) {
+                LoRaNode->flush();
                 return true;
             }else {
                 x++;
@@ -325,6 +376,7 @@ bool LoRaAT::compare(String cmd, String ans) {
         SerialDebug.println("\n\nx: " + String(x) + "  -  ans: " + ans.length() + "\n----------------------------------------\n");
     #endif
 
+    LoRaNode->flush();
     return false;
 } // end compare
 

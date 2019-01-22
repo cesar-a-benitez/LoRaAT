@@ -53,6 +53,7 @@ class LoRaAT {
         void loop();
         void testConfig();
         bool compare(String cmd, String ans);
+        bool waitACK();
     private:
         String _DevAddr;
         String _DevEui;
