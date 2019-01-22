@@ -39,14 +39,14 @@ Itaipu Technological Park (PTI)
   2. (en) Add the library into your code  
      (pt-br) Adicione a biblioteca ao código fonte
       
-   ```cpp
+   ```cpp 
    #include <LoRaAT.h>
    ```
   3. (en) Create an object  
      (pt-br) Crie um objeto
      
-   ```cpp
-   LoRaAT lora(rx, tx);
+   ```cpp {
+	 LoRaAT lora(rx, tx);
    ```
     Notes (Notas):
       (en) At the creation of the object you will need to set the Rx and Tx ports that you want to use
@@ -55,7 +55,7 @@ Itaipu Technological Park (PTI)
   4.  (en) In order to start the object you'll have to use the init function  
        (pt-br) Para que se possa iniciar o objeto você deverá usar a função init
        
-   ```cpp
+   ```cpp 
    {
       lora.init();
    }
@@ -159,11 +159,9 @@ Itaipu Technological Park (PTI)
       sendCMsgHEX(String msg); // Send Confirmed HEX String Message - Envia Mensagem String HEX Confirmada
       
       // Wait Message Function - Função de Espera de Mensagem
-      waitMsg();    // Wait the answer and print in via Serial (if DebugMode is On)
-                    // Espera a mensagem e imprime via Serial(se o DebugMode estiver ativado)
+      waitMsg();    // Wait the answer and print in via Serial - Espera a mensagem e imprime via Serial
       waitAnsMsg(); // Wait and return the answer - Espera e retorna a mensagem - (delay = timedelay*2)
       waitACK();    // Function that returns true if an ACK has been received or false if not received
-                    // Função que retorna verdadeiro se um ACK foi recebido ou falso se não recebido
+                    // Função que retorna verdadeiro se um ACK foi recebido e falso caso não tenha recebido
 }
 ```
-
