@@ -159,7 +159,8 @@ Itaipu Technological Park (PTI)
       sendCMsgHEX(String msg); // Send Confirmed HEX String Message - Envia Mensagem String HEX Confirmada
       
       // Wait Message Function - Função de Espera de Mensagem
-      waitMsg();    // Wait the answer and print in via Serial - Espera a mensagem e imprime via Serial
+      waitMsg();    // Wait the answer and print in via Serial (if DebugMode is On)
+                    // Espera a mensagem e imprime via Serial(se o DebugMode estiver ativado)
       waitAnsMsg(); // Wait and return the answer - Espera e retorna a mensagem - (delay = timedelay*2)
       waitACK();    // Function that returns true if an ACK has been received or false if not received
                     // Função que retorna verdadeiro se um ACK foi recebido ou falso se não recebido
