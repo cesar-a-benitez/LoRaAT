@@ -40,7 +40,7 @@ Itaipu Technological Park (PTI)
      (pt-br) Adicione a biblioteca ao código fonte
       
    ```cpp
-   #include <LoRaAT.h>
+    #include <LoRaAT.h>
    ```
   3. (en) Create an object  
      (pt-br) Crie um objeto
