@@ -1,8 +1,9 @@
 /**
  *  Library created by: Cesar Augusto B. Barbosa e Thiago Piovesan
  *      Latin American Center for Open Technologies (CELTAB) 
- * 
  *          Itaipu Technological Park (PTI)
+ * 
+ *  Manual: https://cesar-a-benitez.github.io/LoRaAT/
  *  
  *  (en)
  *      This Library was designed to configure and use any LoRaWAN node
@@ -17,10 +18,10 @@
  * 
  *      Notas:
  *          - Esta Biblioteca foi idealizada para configurar nós no Plano de Frequência AU915 // na frequencia AU915
- * 
  */
 
 //#define DebugMode // Uncomment to activate the Serial Debug
+#define VerboseMode // Uncomment to activate Verbose Mode
 #include "LoRaAT.h"
 
 
@@ -34,6 +35,8 @@ LoRaAT::LoRaAT(int rx, int tx) {
     _AppEui = "";
     _NwkSkey = "";
     _AppSkey = "";
+    MaxConfigTry = 4;
+    configCount = 0;
 }
 
 void LoRaAT::init() {
@@ -44,12 +47,6 @@ void LoRaAT::init() {
     _timeDelay = 600;
 }
 
-void LoRaAT::setDevAddr(String DevAddr) {
-    // Set DevAddr individually
-    _DevAddr = DevAddr;
-    _DevAddr.toUpperCase();
-    SerialDebug.println("DevAddr: " + _DevAddr);
-}
 
 /**
  *  Attention:
@@ -58,55 +55,95 @@ void LoRaAT::setDevAddr(String DevAddr) {
  *      in the config or testConfig functions.
  */
 
+void LoRaAT::setDevAddr(String DevAddr) {
+    // Set DevAddr individually
+    _DevAddr = DevAddr;
+    _DevAddr.toUpperCase();
+
+    #ifdef VerboseMode
+        SerialDebug.println("DevAddr: " + _DevAddr);
+    #endif
+}
+
 void LoRaAT::setDevEui(String DevEui) {
     // Set DevEui individually
     _DevEui = DevEui;
     _DevEui.toUpperCase();
-    SerialDebug.println("DevEui: " + _DevEui);
+    
+    #ifdef VerboseMode
+        SerialDebug.println("DevEui: " + _DevEui);
+    #endif
 }
 
 void LoRaAT::setAppEui(String AppEui) {
     // setAppEui individually
     _AppEui = AppEui;   
     _AppEui.toUpperCase();
-    SerialDebug.println("AppEui: " + _AppEui);
+
+    #ifdef VerboseMode
+        SerialDebug.println("AppEui: " + _AppEui);
+    #endif
 }
 
 void LoRaAT::setNwkSkey(String NwkSkey) {
     // Set NwkSkey individually
     _NwkSkey = NwkSkey;
     _NwkSkey.toUpperCase();
-    SerialDebug.println("NwkSkey: " + _NwkSkey);
+
+    #ifdef VerboseMode
+        SerialDebug.println("NwkSkey: " + _NwkSkey);
+    #endif
 }
 
 void LoRaAT::setAppSkey(String AppSkey) {
     // Set AppSkey individually
     _AppSkey = AppSkey;
     _AppSkey.toUpperCase();
-    SerialDebug.println("AppSkey: " + _AppSkey);
+
+    #ifdef VerboseMode
+        SerialDebug.println("AppSkey: " + _AppSkey);
+    #endif
 }
 
 void LoRaAT::setKeys(String NwkSkey, String AppSkey) {
     // Set NwkSkey and AppSkey keys
     _NwkSkey = NwkSkey;
     _NwkSkey.toUpperCase();
-    SerialDebug.println("NwkSkey: " + _NwkSkey);
+
+    #ifdef VerboseMode
+        SerialDebug.println("NwkSkey: " + _NwkSkey);
+    #endif
+
     _AppSkey = AppSkey;
     _AppSkey.toUpperCase();
-    SerialDebug.println("AppSkey: " + _AppSkey);
+
+    #ifdef VerboseMode
+        SerialDebug.println("AppSkey: " + _AppSkey);
+    #endif
 }
 
 void LoRaAT::setIDs(String DevAddr, String DevEui, String AppEui) {
     // Set DevAddr, DevEui and AppEui keys
     _DevAddr = DevAddr;
     _DevAddr.toUpperCase();
-    SerialDebug.println("DevAddr: " + _DevAddr);
+
+    #ifdef VerboseMode
+        SerialDebug.println("DevAddr: " + _DevAddr);
+    #endif
+
     _DevEui = DevEui;
     _DevEui.toUpperCase();
-    SerialDebug.println("DevEui: " + _DevEui);
+
+    #ifdef VerboseMode
+        SerialDebug.println("DevEui: " + _DevEui);
+    #endif
+
     _AppEui = AppEui;
     _AppEui.toUpperCase();
-    SerialDebug.println("AppEui: " + _AppEui);
+
+    #ifdef VerboseMode
+        SerialDebug.println("AppEui: " + _AppEui);
+    #endif
 }
 
 void LoRaAT::setTimeDelay(int timeDelay) {
@@ -134,19 +171,27 @@ void LoRaAT::waitMsg() {
     // Function responsable for waiting a response to the sented message
     delay(_timeDelay);
 
-    #ifdef DebugMode
-        while (LoRaNode->available())
+    
+    while (LoRaNode->available()) {
+        #ifdef DebugMode
             SerialDebug.write(LoRaNode->read());
+        #endif
+    }
+
+    #ifdef DebugMode
         SerialDebug.println("");
-        delay(300);
     #endif
+
+    delay(300);
 
     LoRaNode->flush();
 } // end waitMsg
 
 void LoRaAT::config() {
     // Configuration function
-    SerialDebug.println("\nConfig Started...\n\nConfiguring ID Keys...");
+    #ifdef VerboseMode
+        SerialDebug.println("\nConfig Started...\n\nConfiguring ID Keys...");
+    #endif
 
     /**
      * Config ID Keys
@@ -184,7 +229,10 @@ void LoRaAT::config() {
 
 void LoRaAT::DRConfig() {
     // Data Rate Configuration function
-    SerialDebug.println("Configuring ports and channels...");
+    #ifdef VerboseMode
+        SerialDebug.print("\nConfiguring ports and channels...");
+    #endif
+
     // Set port = 1
     sendCmd("AT+PORT=1");
 
@@ -200,7 +248,10 @@ void LoRaAT::DRConfig() {
 
 void LoRaAT::CHConfig() {
     // Set up the 8 channels of AU915 Frequency Plan
-    SerialDebug.println("Setting up channels....");
+    #ifdef VerboseMode
+        SerialDebug.print("\nSetting up channels....");
+    #endif
+
     sendCmd("AT");
     sendCmd("AT+CH=0, 916.8");
     delay(50);
@@ -224,9 +275,11 @@ void LoRaAT::CHConfig() {
         sendCmd("AT+CH=" + String(cont) + ",0");
         delay(50);
     }
-    SerialDebug.println("Channels settup finished....");
-    
-    SerialDebug.println("\nConfig Finished...\n");
+    #ifdef VerboseMode
+        SerialDebug.println("Channels settup finished....");
+        
+        SerialDebug.println("\nConfig Finished...\n");
+    #endif
 } // end CHConfig
 
 void LoRaAT::loop() {
@@ -298,9 +351,6 @@ bool LoRaAT::waitACK() {
 
     while (true) {
         while (LoRaNode->available()) {
-            #ifdef DebugMode
-                SerialDebug.write(LoRaNode->read());
-            #endif
             temp = LoRaNode->read();
             response += temp;
         }
@@ -377,57 +427,90 @@ bool LoRaAT::compare(String cmd, String ans) {
     #endif
 
     LoRaNode->flush();
+    waitMsg();
     return false;
 } // end compare
 
-void LoRaAT::testConfig() {
+bool LoRaAT::testConfig() {
     // Function responsable to test if the node is configured
     // If is not configured the Function will configure it
     int ok = 0, ntest = 0, fail = 0;
 
-    SerialDebug.println("\n----------------------------------------\n        Starting Config Test:\n");
+    #ifdef VerboseMode
+        SerialDebug.println("\n----------------------------------------\n        Starting Config Test:\n");
+    #endif
 
     if(_DevAddr != "") {
-        SerialDebug.print("DevAddr: ");
+        #ifdef VerboseMode
+            SerialDebug.print("DevAddr: ");
+        #endif
+
         if (compare("at+id=devaddr", "+ID: DevAddr, " + _DevAddr)) {
-            SerialDebug.print("pass");
+            #ifdef VerboseMode
+                SerialDebug.print("pass");
+            #endif
+
             ok++;
             ntest++;
         }else {
-            SerialDebug.print("fail\nReconfiguring DevAddr....");
+            #ifdef VerboseMode
+                SerialDebug.print("fail\nReconfiguring DevAddr....");
+            #endif
+
             sendCmd("at+id=devaddr, " + _DevAddr);
             ntest++;
         }
     }
 
     if(_DevEui != "") {
-        SerialDebug.print("\nDevEui: ");
+        #ifdef VerboseMode
+            SerialDebug.print("\nDevEui: ");
+        #endif
+
         if (compare("at+id=deveui", "+ID: DevEui, " + _DevEui)) {
-            SerialDebug.print("pass");
+            #ifdef VerboseMode
+                SerialDebug.print("pass");
+            #endif
+
             ok++;
             ntest++;
         }else {
-            SerialDebug.print("fail\nReconfiguring DevEui....");
+            #ifdef VerboseMode
+                SerialDebug.print("fail\nReconfiguring DevEui....");
+            #endif
+
             sendCmd("at+id=deveui, " + _DevEui);
             ntest++;
         }
     }
 
     if(_AppEui != "") {
-        SerialDebug.print("\nAppEui: ");
+        #ifdef VerboseMode
+            SerialDebug.print("\nAppEui: ");
+        #endif
+
         if (compare("at+id=appeui", "+ID: AppEui, " + _AppEui)) {
-            SerialDebug.print("pass");
+            #ifdef VerboseMode
+                SerialDebug.print("pass");
+            #endif
+
             ok++;
             ntest++;
         }else {
-            SerialDebug.print("fail\nReconfiguring AppEui....");
+            #ifdef VerboseMode
+                SerialDebug.print("fail\nReconfiguring AppEui....");
+            #endif
+
             sendCmd("at+id=appeui, " + _AppEui);
             ntest++;
         }
     }
 
     if(_NwkSkey != ""){
-        SerialDebug.print("\nNwkSKey: pass");
+        #ifdef VerboseMode
+            SerialDebug.print("\nNwkSKey: pass");
+        #endif
+
         sendCmd("AT+KEY=NWKSKEY, " + _NwkSkey);
         ok++;
         ntest++;
@@ -435,41 +518,75 @@ void LoRaAT::testConfig() {
     }
 
     if(_AppSkey != ""){
-        SerialDebug.print("\nAppSKey: pass");
+        #ifdef VerboseMode
+            SerialDebug.print("\nAppSKey: pass");
+        #endif
+
         sendCmd("AT+KEY=APPSKEY, " + _AppSkey);
         ok++;
         ntest++;
         delay(100);
     }
 
-    SerialDebug.print("\nDR: ");
+    #ifdef VerboseMode
+        SerialDebug.print("\nDR: ");
+    #endif
     if (compare("at+dr", "+DR: DR0\n+DR: AU915 DR0  SF12 BW125K")){
-        SerialDebug.print("pass");
+        #ifdef VerboseMode
+            SerialDebug.print("pass");
+        #endif
+
         ok++;
         ntest++;
     }else {
-        SerialDebug.print("fail\nReconfiguring DR....");
+        #ifdef VerboseMode
+            SerialDebug.print("fail\nReconfiguring DR....");
+        #endif
+        
         DRConfig();
         ntest++;
     }
 
     delay(300);
-    SerialDebug.print("\nCH: ");
+    #ifdef VerboseMode
+        SerialDebug.print("\nCH: ");
+    #endif
     if (compare("at+ch", "+CH: 8; 0,916800000")) {
-        SerialDebug.print("pass");
+        #ifdef VerboseMode
+            SerialDebug.print("pass");
+        #endif
+
         ok++;
         ntest++;
     }else {
-        SerialDebug.print("fail\nReconfiguring CH....\n");
+        #ifdef VerboseMode
+            SerialDebug.print("fail\nReconfiguring CH....");
+        #endif
+
         CHConfig();
         ntest++;
     }
 
     fail = ntest - ok;
-    SerialDebug.println("\n----------------------------------------\n | Tests: " + String(ntest) + " | Passed: " + String(ok) + " | Failed: " + String(fail) + " |\n----------------------------------------\n");
+    #ifdef VerboseMode
+        SerialDebug.println("\n----------------------------------------\n | Tests: " + String(ntest) + " | Passed: " + String(ok) + " | Failed: " + String(fail) + " |\n----------------------------------------\n");
+    #endif
 
-    if(fail > 2){
-        SerialDebug.println("More than 2 errors found, restarting Config Test....");
+    if(fail > 0){
+        #ifdef VerboseMode
+            SerialDebug.println("Errors found, restarting Config Test....");
+        #endif
+
+        if (configCount < MaxConfigTry) {
+            configCount++;
+        }else {
+            #ifdef VerboseMode
+                SerialDebug.println("ERROR: Problems found during config test, please check the node and the communication.");
+            #endif
+            return false;
+        }
         testConfig();
+    }else {
+        return true;
     }
 } // end testConfig

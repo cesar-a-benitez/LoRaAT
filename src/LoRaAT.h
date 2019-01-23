@@ -1,8 +1,9 @@
 /**
  *  Library created by: Cesar Augusto B. Barbosa e Thiago Piovesan
  *      Latin American Center for Open Technologies (CELTAB) 
- * 
  *          Itaipu Technological Park (PTI)
+ * 
+ *  Manual: https://cesar-a-benitez.github.io/LoRaAT/
  *  
  *  (en)
  *      This Library was designed to configure and use any LoRaWAN node
@@ -17,7 +18,6 @@
  * 
  *      Notas:
  *          - Esta Biblioteca foi idealizada para configurar nós no Plano de Frequência AU915 // na frequencia AU915
- * 
  */
 
 #ifndef LoRaAT_h
@@ -51,7 +51,7 @@ class LoRaAT {
         void setTimeDelay(int timeDelay);
         String waitAnsMsg();
         void loop();
-        void testConfig();
+        bool testConfig();
         bool compare(String cmd, String ans);
         bool waitACK();
     private:
@@ -62,6 +62,8 @@ class LoRaAT {
 	String _AppSkey;
         int _rx, _tx;
         int _timeDelay;
+        int configCount;
+        int MaxConfigTry;
         SoftwareSerial *LoRaNode;
 };
 

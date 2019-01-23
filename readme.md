@@ -40,15 +40,15 @@ Itaipu Technological Park (PTI)
      (pt-br) Adicione a biblioteca ao código fonte
       
    ```cpp
-    #include <LoRaAT.h>
-   ```
+	#include <LoRaAT.h>
+	```
   3. (en) Create an object  
      (pt-br) Crie um objeto
      
-   ```cpp 
-   {
-      LoRaAT lora(rx, tx);
-   }
+   ```cpp
+	{
+	   LoRaAT lora(rx, tx);
+	}
    ```
     Notes (Notas):
       (en) At the creation of the object you will need to set the Rx and Tx ports that you want to use
@@ -57,7 +57,7 @@ Itaipu Technological Park (PTI)
   4.  (en) In order to start the object you'll have to use the init function  
        (pt-br) Para que se possa iniciar o objeto você deverá usar a função init
        
-   ```cpp 
+   ```cpp
    {
       lora.init();
    }
@@ -96,7 +96,7 @@ Itaipu Technological Park (PTI)
    {
       lora.config(); // Function to configure the node - Função para configurar o nó
       
-      lora.testConfig(); // Function to test the configuration and reconfigure if needed
+      lora.testConfig); // Function to test the configuration and reconfigure if needed
                         // Função para testar as configurações e reconfigurar se necessário
    }
    ```
@@ -141,17 +141,22 @@ Itaipu Technological Park (PTI)
       setNwkSkey(String NwkSkey);   // Pass the NwkSkey String to the object - Passa a String do NwkSkey para o objeto
       setAppSkey(String AppSkey);   // Pass the AppSkey String to the object - Para a String do AppSkey para o objeto
       
-      setIDs(String DevAddr, String DevEui, String AppEui); // Pass all the IDs together to the object - Passa todos IDs juntos para o objeto
-      setKeys(String NwkSkey, String AppSkey); // Pass all the Keys together to the object - Passa todas as Keys juntas para o objeto
+      setIDs(String DevAddr, String DevEui, String AppEui); // Pass all the IDs together to the object
+   																			// Passa todos IDs juntos para o objeto
+      setKeys(String NwkSkey, String AppSkey); // Pass all the Keys together to the object 
+															  // Passa todas as Keys juntas para o objeto
       
       // Node Configuration Functions - Funções de Configuração dos Nós
       config();       // Configure the node with the configurations passed - Configura o nó com as configurações passadas
-      testConfig();   //  Test the configuration and reconfigure if needed - Testa as configurações e reconfigura se necessário
-      
+      testConfig();   //  Test the configuration and reconfigure if needed, returns true if succeeded and false if not
+	  						 // Testa as configurações e reconfigura se necessário, retorna verdadeiro se bem sucedido e falso caso não for
+
       // Generic Functions - Funções Genéricas
       sendCmd(String cmd);              // Send command via Serial to the node - Envia comandos para o nó via Serial
-      compare(String cmd, String ans);  // Send a command and compare the received answer - Envia um comando e compara a resposta recebida
-      loop();   // Function to test the Serial Communication via Serial Console - Função para testar a comunicação Serial usando o Console Serial
+      compare(String cmd, String ans);  // Send a command and compare the received answer
+			   									 // Envia um comando e compara a resposta recebida
+      loop();   // Function to test the Serial Communication via Serial Console
+  				    // Função para testar a comunicação Serial usando o Console Serial
       setTimeDelay(int timeDelay);      // Pass a new timeDelay to the functions - Passa um novo timeDelay para as funções
       
       // Send Message Functions - Funções de Envio de Mensagens
@@ -164,6 +169,7 @@ Itaipu Technological Park (PTI)
       waitMsg();    // Wait the answer and print in via Serial - Espera a mensagem e imprime via Serial
       waitAnsMsg(); // Wait and return the answer - Espera e retorna a mensagem - (delay = timedelay*2)
       waitACK();    // Function that returns true if an ACK has been received or false if not received
-                    // Função que retorna verdadeiro se um ACK foi recebido e falso caso não tenha recebido
+						  // Função que retorna verdadeiro se um ACK foi recebido e falso caso não tenha recebido
 }
 ```
+
