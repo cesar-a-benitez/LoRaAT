@@ -142,22 +142,23 @@ Itaipu Technological Park (PTI)
       setAppSkey(String AppSkey);   // Pass the AppSkey String to the object - Para a String do AppSkey para o objeto
       
       setIDs(String DevAddr, String DevEui, String AppEui); // Pass all the IDs together to the object
-   																			// Passa todos IDs juntos para o objeto
+      					        	  // Passa todos IDs juntos para o objeto
       setKeys(String NwkSkey, String AppSkey); // Pass all the Keys together to the object 
-															  // Passa todas as Keys juntas para o objeto
+						     // Passa todas as Keys juntas para o objeto
       
       // Node Configuration Functions - Funções de Configuração dos Nós
       config();       // Configure the node with the configurations passed - Configura o nó com as configurações passadas
-      testConfig();   //  Test the configuration and reconfigure if needed, returns true if succeeded and false if not
-	  						 // Testa as configurações e reconfigura se necessário, retorna verdadeiro se bem sucedido e falso caso não for
+      testConfig();   // Test the configuration and reconfigure if needed, returns true if succeeded and false if not
+	                  // Testa as configurações e reconfigura se necessário, retorna verdadeiro se bem sucedido e falso caso não for
 
       // Generic Functions - Funções Genéricas
       sendCmd(String cmd);              // Send command via Serial to the node - Envia comandos para o nó via Serial
       compare(String cmd, String ans);  // Send a command and compare the received answer
-			   									 // Envia um comando e compara a resposta recebida
+			   	              // Envia um comando e compara a resposta recebida
       loop();   // Function to test the Serial Communication via Serial Console
-  				    // Função para testar a comunicação Serial usando o Console Serial
-      setTimeDelay(int timeDelay);      // Pass a new timeDelay to the functions - Passa um novo timeDelay para as funções
+          // Função para testar a comunicação Serial usando o Console Serial
+      setTimeDelay(int timeDelay);      // Pass a new timeDelay to the functions 
+                                        // Passa um novo timeDelay para as funções
       
       // Send Message Functions - Funções de Envio de Mensagens
       sendMsg(String msg);     // Send String Message - Envia Mensagem String
@@ -169,7 +170,7 @@ Itaipu Technological Park (PTI)
       waitMsg();    // Wait the answer and print in via Serial - Espera a mensagem e imprime via Serial
       waitAnsMsg(); // Wait and return the answer - Espera e retorna a mensagem - (delay = timedelay*2)
       waitACK();    // Function that returns true if an ACK has been received or false if not received
-						  // Função que retorna verdadeiro se um ACK foi recebido e falso caso não tenha recebido
+	 	          // Função que retorna verdadeiro se um ACK foi recebido e falso caso não tenha recebido
 }
 ```
 
