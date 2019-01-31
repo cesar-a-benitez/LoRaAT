@@ -4,6 +4,8 @@ LoRaAT lora(rx,tx);
 String DevAddr = "00000000";
 String DevEui = "0000000000000000";
 String AppEui = "0000000000000000";
+String NwkSkey = "";
+String AppSkey = "";
   
 void setup() {
   lora.init();
