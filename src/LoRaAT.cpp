@@ -254,26 +254,26 @@ void LoRaAT::CHConfig() {
 
     sendCmd("AT");
     sendCmd("AT+CH=0, 916.8");
-    delay(50);
+    delay(100);
     sendCmd("AT+CH=1, 917.2");
-    delay(50);
+    delay(100);
     sendCmd("AT+CH=2, 917.4");
-    delay(50);
+    delay(100);
     sendCmd("AT+CH=3, 917.6");
-    delay(50);
+    delay(100);
     sendCmd("AT+CH=4, 917.8");
-    delay(50);
+    delay(100);
     sendCmd("AT+CH=5, 918");
-    delay(50);
+    delay(100);
     sendCmd("AT+CH=6, 918.2");
-    delay(50);
+    delay(100);
     sendCmd("AT+CH=7, 918.5");
-    delay(50);
+    delay(100);
 
     // Deleting the unused channels that the DR US915 has set up
     for(int cont=8; cont < 73; cont++) {
         sendCmd("AT+CH=" + String(cont) + ",0");
-        delay(50);
+        delay(100);
     }
     #ifdef VerboseMode
         SerialDebug.println("Channels settup finished....");
