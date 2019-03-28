@@ -1,4 +1,4 @@
-/**
+    /**
  *  Library created by: Cesar Augusto B. Barbosa e Thiago Piovesan
  *      Latin American Center for Open Technologies (CELTAB) 
  *          Itaipu Technological Park (PTI)
@@ -20,9 +20,11 @@
  *          - Esta Biblioteca foi idealizada para configurar nós no Plano de Frequência AU915 // na frequencia AU915
  */
 
-//#define DebugMode // Uncomment to activate the Serial Debug
-#define VerboseMode // Uncomment to activate Verbose Mode
 #include "LoRaAT.h"
+
+#ifdef Watchdog
+    #include <ESP8266WiFi.h>
+#endif
 
 
 LoRaAT::LoRaAT(int rx, int tx) {
@@ -156,6 +158,12 @@ void LoRaAT::setTimeDelay(int timeDelay) {
     }    
 }
 
+void LoRaAT::watchdogRst() {
+    #ifdef Watchdog
+        ESP.wdtDisable();
+    #endif
+}
+
 void LoRaAT::sendCmd(String cmd) {
     // Function responsable to send the command received to the node
     #ifdef DebugMode
@@ -233,6 +241,7 @@ void LoRaAT::DRConfig() {
         SerialDebug.print("\nConfiguring ports and channels...");
     #endif
 
+    watchdogRst();
     // Set port = 1
     sendCmd("AT+PORT=1");
 
@@ -252,6 +261,7 @@ void LoRaAT::CHConfig() {
         SerialDebug.print("\nSetting up channels....");
     #endif
 
+    watchdogRst();
     sendCmd("AT");
     sendCmd("AT+CH=0, 916.8");
     delay(100);
@@ -259,6 +269,7 @@ void LoRaAT::CHConfig() {
     delay(100);
     sendCmd("AT+CH=2, 917.4");
     delay(100);
+    watchdogRst();
     sendCmd("AT+CH=3, 917.6");
     delay(100);
     sendCmd("AT+CH=4, 917.8");
@@ -269,11 +280,15 @@ void LoRaAT::CHConfig() {
     delay(100);
     sendCmd("AT+CH=7, 918.5");
     delay(100);
+    watchdogRst();
 
     // Deleting the unused channels that the DR US915 has set up
     for(int cont=8; cont < 73; cont++) {
         sendCmd("AT+CH=" + String(cont) + ",0");
         delay(100);
+        if(cont%4 == 0) {
+            watchdogRst();
+        }
     }
     #ifdef VerboseMode
         SerialDebug.println("Channels settup finished....");
@@ -440,6 +455,7 @@ bool LoRaAT::testConfig() {
         SerialDebug.println("\n----------------------------------------\n        Starting Config Test:\n");
     #endif
 
+    watchdogRst();
     if(_DevAddr != "") {
         #ifdef VerboseMode
             SerialDebug.print("DevAddr: ");
@@ -462,6 +478,7 @@ bool LoRaAT::testConfig() {
         }
     }
 
+    watchdogRst();
     if(_DevEui != "") {
         #ifdef VerboseMode
             SerialDebug.print("\nDevEui: ");
@@ -484,6 +501,7 @@ bool LoRaAT::testConfig() {
         }
     }
 
+    watchdogRst();
     if(_AppEui != "") {
         #ifdef VerboseMode
             SerialDebug.print("\nAppEui: ");
@@ -506,6 +524,7 @@ bool LoRaAT::testConfig() {
         }
     }
 
+    watchdogRst();
     if(_NwkSkey != ""){
         #ifdef VerboseMode
             SerialDebug.print("\nNwkSKey: pass");
@@ -515,19 +534,22 @@ bool LoRaAT::testConfig() {
         ok++;
         ntest++;
         delay(100);
+
     }
 
+    watchdogRst();
     if(_AppSkey != ""){
         #ifdef VerboseMode
             SerialDebug.print("\nAppSKey: pass");
         #endif
-
+        
         sendCmd("AT+KEY=APPSKEY, " + _AppSkey);
         ok++;
         ntest++;
         delay(100);
     }
 
+    watchdogRst();
     #ifdef VerboseMode
         SerialDebug.print("\nDR: ");
     #endif
@@ -547,6 +569,7 @@ bool LoRaAT::testConfig() {
         ntest++;
     }
 
+    watchdogRst();
     delay(300);
     #ifdef VerboseMode
         SerialDebug.print("\nCH: ");
@@ -572,6 +595,7 @@ bool LoRaAT::testConfig() {
         SerialDebug.println("\n----------------------------------------\n | Tests: " + String(ntest) + " | Passed: " + String(ok) + " | Failed: " + String(fail) + " |\n----------------------------------------\n");
     #endif
 
+    watchdogRst();
     if(fail > 0){
         #ifdef VerboseMode
             SerialDebug.println("Errors found, restarting Config Test....");

@@ -122,13 +122,21 @@ Itaipu Technological Park (PTI)
                                     // Envia Mensagem String
       lora.sendCMsg(String msg);    // Send String Confirmed Message
                                     // Envia Mensagem String Confirmada
-      lora.sendMsgHEX(String msg);  // Send String Hex Message
+      lora.sendMsgHex(String msg);  // Send String Hex Message
                                     // Envia Mensagem String HEX
-      lora.sendCMsgHEX(String msg); // Send String Confirmed HEX Message
+      lora.sendCMsgHex(String msg); // Send String Confirmed HEX Message
                                     // Envia Mensagem String HEX Confirmada
   }
   ```
-  
+
+***
+## Enable Watchdog
+(en) To enable Watchdog, just uncomment the definition below  
+(pt-br) Para habilitar o Watchdog é apenas descomentar a definição abaixo
+``` cpp
+   #define Watchdog
+```
+
 ***
 ## Functions List (Lista de Funções):
   ```cpp
@@ -177,8 +185,8 @@ Itaipu Technological Park (PTI)
                                  // Envia Mensagem String
       sendCMsg(String msg);      // Send Confirmed String Message
                                  // Envia Mensagem String Confirmada
-      sendMsgHEX(String msg);    // Send HEX String Message
-                                 // Envia Mensagem String HEX
+      sendMsgHex(String msg);    // Send HEX String Message
+                                 // Envia Mensagem String Hex
       sendCMsgHEX(String msg);   // Send Confirmed HEX String Message
                                  // Envia Mensagem String HEX Confirmada
       

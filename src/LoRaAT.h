@@ -24,6 +24,10 @@
 #define LoRaAT_h
 #define SerialDebug Serial
 
+//#define DebugMode     // Uncomment to activate the Serial Debug
+#define VerboseMode     // Uncomment to activate Verbose Mode
+#define Watchdog        // Uncomment to activate Watchdog
+
 #include <SoftwareSerial.h>
 #include "Arduino.h"
 #include "string.h"
@@ -54,6 +58,7 @@ class LoRaAT {
         bool testConfig();
         bool compare(String cmd, String ans);
         bool waitACK();
+        void watchdogRst();
     private:
         String _DevAddr;
         String _DevEui;
