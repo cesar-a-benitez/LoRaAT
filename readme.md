@@ -187,7 +187,7 @@ Itaipu Technological Park (PTI)
                                  // Envia Mensagem String Confirmada
       sendMsgHex(String msg);    // Send HEX String Message
                                  // Envia Mensagem String Hex
-      sendCMsgHEX(String msg);   // Send Confirmed HEX String Message
+      sendCMsgHex(String msg);   // Send Confirmed HEX String Message
                                  // Envia Mensagem String HEX Confirmada
       
       // Wait Message Function - Função de Espera de Mensagem
