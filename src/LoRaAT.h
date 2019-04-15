@@ -26,11 +26,11 @@
 #define Watchdog        // Uncomment to activate Watchdog
 
 /**
-Log Level Values:
+Log Level:
 
 0 = No data sent by serial / Nenhum dado enviado por serial
-1 = Only status send by serial / Apenas status enviado por serial
-2 = Debug send by serial / Debug enviado por serial
+1 = Only status sent by serial / Apenas status enviado por serial
+2 = Debug data sent by serial / Dados de debug enviado por serial
 */
 
 #define LogLevel 1
