@@ -116,87 +116,79 @@ Itaipu Technological Park (PTI)
    * Mensagem String HEX  
    * Mensagem String HEX Confirmada
    
-   ```cpp
-   {
-      lora.sendMsg(String msg);     // Send String Message
-                                    // Envia Mensagem String
-      lora.sendCMsg(String msg);    // Send String Confirmed Message
-                                    // Envia Mensagem String Confirmada
-      lora.sendMsgHex(String msg);  // Send String Hex Message
-                                    // Envia Mensagem String HEX
-      lora.sendCMsgHex(String msg); // Send String Confirmed HEX Message
-                                    // Envia Mensagem String HEX Confirmada
-  }
-  ```
+Function <br> Função | Description <br> Descrição
+----------------|-----------------------
+lora.sendMsg(String msg) | Send String Message <br> Envia Mensagem String
+lora.sendCMsg(String msg) | Send String Confirmed Message <br> Envia Mensagem String Confirmada
+lora.sendMsgHex(String msg) | Send String Hex Message <br> Envia Mensagem String HEX
+lora.sendCMsgHex(String msg) | Send String Confirmed HEX Message <br> Envia Mensagem String HEX Confirmada
 
 ***
 ## Enable Watchdog
-(en) To enable Watchdog, just uncomment the definition below  
-(pt-br) Para habilitar o Watchdog é apenas descomentar a definição abaixo
+(en) To enable Watchdog, just uncomment the definition below, this function uses the ESP8266WiFi.h library  
+(pt-br) Para habilitar o Watchdog é apenas descomentar a definição abaixo, esta função usa a biblioteca ESP8266WiFi.h
 ``` cpp
    #define Watchdog
 ```
 
 ***
 ## Functions List (Lista de Funções):
-  ```cpp
-  {
-      // Object Configuration Functions - Funções de Configuração do Objeto
-      LoRaAT(int rx, int tx); // Constructor - Construtor
-      init();                 // Initialization Function - Função de Inicialização
-      
-      // Parameter Definition Functions - Funções de Definição de Parâmetros
-      setDevAddr(String DevAddr);   // Pass the DevAddr String to the object 
-                                    // Passa a String do DevAddr para o objeto
-      setDevEui(String DevEui);     // Pass the DevEui String to the object
-                                    // Passa a String do DevEui para o objeto
-      setAppEui(String AppEui);     // Pass the AppEui String to the object
-                                    // Passa a String do AppEui para o objeto
-      setNwkSkey(String NwkSkey);   // Pass the NwkSkey String to the object
-                                    // Passa a String do NwkSkey para o objeto
-      setAppSkey(String AppSkey);   // Pass the AppSkey String to the object 
-                                    // Para a String do AppSkey para o objeto
-      
-      setIDs(String DevAddr, String DevEui, String AppEui); // Pass all the IDs together to the object
-                                                            // Passa todos IDs juntos para o objeto
-      setKeys(String NwkSkey, String AppSkey);              // Pass all the Keys together to the object 
-                                                            // Passa todas as Keys juntas para o objeto
-      
-      // Node Configuration Functions - Funções de Configuração dos Nós
-      config();         // Configure the node with the configurations passed
-                        // Configura o nó com as configurações passadas
-      testConfig();     // Test the configuration and reconfigure if needed,
-                        // returns true if succeeded and false if not
-                        // Testa as configurações e reconfigura se necessário,
-                        // retorna verdadeiro se sucesso ou falso se falhou
 
-      // Generic Functions - Funções Genéricas
-      sendCmd(String cmd);             // Send command via Serial to the node
-                                       // Envia comandos para o nó via Serial
-      compare(String cmd, String ans); // Send a command and compare the received answer
-                                       // Envia um comando e compara a resposta recebida
-      loop();                          // Function to test the Serial Communication via Serial Console
-                                       // Função para testar a comunicação Serial usando o Console Serial
-      setTimeDelay(int timeDelay);      // Pass a new timeDelay to the functions 
-                                        // Passa um novo timeDelay para as funções
-      
-      // Send Message Functions - Funções de Envio de Mensagens
-      sendMsg(String msg);       // Send String Message
-                                 // Envia Mensagem String
-      sendCMsg(String msg);      // Send Confirmed String Message
-                                 // Envia Mensagem String Confirmada
-      sendMsgHex(String msg);    // Send HEX String Message
-                                 // Envia Mensagem String Hex
-      sendCMsgHex(String msg);   // Send Confirmed HEX String Message
-                                 // Envia Mensagem String HEX Confirmada
-      
-      // Wait Message Function - Função de Espera de Mensagem
-      waitMsg();     // Wait the answer and print in via Serial - Espera a mensagem e imprime via Serial
-      waitAnsMsg();  // Wait and return the answer - Espera e retorna a mensagem - (delay = timedelay*2)
-      waitACK();     // Function that waits the receive of an ACK
-                     // returns true if an ACK has been received or false if not received
-                     // Função que espera recebimento de um ACK
-                     // retorna verdadeiro se um ACK foi recebido e falso caso não tenha recebido
-}
-```
+(en) Table of Object Configuration Functions  
+(pt-br) Tabela de Funções de Configuração de Objeto  
 
+Function <br> Função | Description <br> Descrição
+----------------|-----------------------  
+LoRaAT(int rx, int tx) | Constructor <br> Construtor
+init()                | Initialization Function <br> Função de Inicialização  
+  
+(en) Table of Parameter Definition Functions   
+(pt-br) Funções de Definição de Parâmetros  
+
+Function <br> Função | Description <br> Descrição
+----------------|-----------------------
+setDevAddr(String DevAddr)   | Pass the DevAddr String to the object <br> Passa a String do DevAddr para o objeto
+setDevEui(String DevEui)     | Pass the DevEui String to the object <br> Passa a String do DevEui para o objeto
+setAppEui(String AppEui)     | Pass the AppEui String to the object <br> Passa a String do AppEui para o objeto
+setNwkSkey(String NwkSkey)   | Pass the NwkSkey String to the object <br> Passa a String do NwkSkey para o objeto
+setAppSkey(String AppSkey)   | Pass the AppSkey String to the object <br> Para a String do AppSkey para o objeto
+setIDs(String DevAddr, String DevEui, String AppEui) | Pass all the IDs together to the object <br> Passa todos IDs juntos para o objeto
+setKeys(String NwkSkey, String AppSkey) | Pass all the Keys together to the object <br> Passa todas as Keys juntas para o objeto
+
+(en) Table of Node Configuration Functions  
+(pt-br) Tabela de Funções de Configuração dos Nós  
+
+Function <br> Função | Description <br> Descrição
+----------------|-----------------------
+config() | Configure the node with the configurations passed <br> Configura o nó com as configurações passadas
+testConfig() | Test the configuration and reconfigure if needed, returns true if succeeded and false if not <br> Testa as configurações e reconfigura se necessário, retorna verdadeiro se sucesso ou falso se falhou
+
+(en) Table of Generic Functions  
+(pt-br) Tabela de Funções Genéricas  
+
+Function <br> Função | Description <br> Descrição
+----------------|-----------------------
+sendCmd(String cmd) | Send command via Serial to the node (calls waitMsg() at the end)<br> Envia comandos para o nó via Serial (chama waitMsg() no final)
+sendATCmd(String cmd) | Send command via serial to the node <br> Envia comandos para o nó via Serial
+compare(String cmd, String ans) | Send a command and compare the received answer <br> Envia um comando e compara a resposta recebida
+setTimeDelay(int timeDelay) | Pass a new timeDelay to the functions  <br>  Passa um novo timeDelay para as funções
+watchdogRst() | Reset the watchdog of ESP8266 boards <br> Reseta o watchdog de placas ESP8266
+
+(en) Table of Send Message Functions  
+(pt-br) Funções de Envio de Mensagens  
+
+Function <br> Função | Description <br> Descrição
+----------------|-----------------------
+sendMsg(String msg) | Send String Message <br> Envia Mensagem String
+sendCMsg(String msg) | Send Confirmed String Message <br> Envia Mensagem String Confirmada
+sendMsgHex(String msg) | Send HEX String Message <br> Envia Mensagem String Hex
+sendCMsgHex(String msg) | Send Confirmed HEX String Message <br> Envia Mensagem String HEX Confirmada
+
+(en) Table of Wait Message Function  
+(pt-br) Função de Espera de Mensagem  
+
+Function <br> Função | Description <br> Descrição
+----------------|-----------------------
+waitMsg() | Wait the answer and print in via Serial <br> Espera a mensagem e imprime via Serial
+waitAnsMsg() | Wait and return the answer <br> Espera e retorna a mensagem <br> (delay = timedelay*2)
+waitACK() | Function that waits the receive of an ACK returns true if an ACK has been received or false if not received <br> Função que espera recebimento de um ACK retorna verdadeiro se um ACK foi recebido e falso caso não tenha recebido

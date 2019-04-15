@@ -22,13 +22,21 @@
 
 #ifndef LoRaAT_h
 #define LoRaAT_h
-#define SerialDebug Serial
 
-//#define DebugMode     // Uncomment to activate the Serial Debug
-#define VerboseMode     // Uncomment to activate Verbose Mode
 #define Watchdog        // Uncomment to activate Watchdog
 
+/**
+Log Level Values:
+
+0 = No data sent by serial / Nenhum dado enviado por serial
+1 = Only status send by serial / Apenas status enviado por serial
+2 = Debug send by serial / Debug enviado por serial
+*/
+
+#define LogLevel 1
+
 #include <SoftwareSerial.h>
+# include <iostream>
 #include "Arduino.h"
 #include "string.h"
 
@@ -47,6 +55,7 @@ class LoRaAT {
         void DRConfig();
         void CHConfig();
         void sendCmd(String cmd);
+        void sendATCmd(String cmd);
         void waitMsg();
         void sendMsg(String msg);
         void sendCMsg(String msg);
@@ -54,7 +63,6 @@ class LoRaAT {
         void sendCMsgHex(String msg);
         void setTimeDelay(int timeDelay);
         String waitAnsMsg();
-        void loop();
         bool testConfig();
         bool compare(String cmd, String ans);
         bool waitACK();

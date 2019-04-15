@@ -17,7 +17,7 @@
  *      nó LoRaWAN que use comandos AT.
  * 
  *      Notas:
- *          - Esta Biblioteca foi idealizada para configurar nós no Plano de Frequência AU915 // na frequencia AU915
+ *          - Esta Biblioteca foi idealizada para configurar nós no Plano de Frequência AU915
  */
 
 #include "LoRaAT.h"
@@ -45,7 +45,6 @@ void LoRaAT::init() {
     // Starts the Serial connections
     LoRaNode = new SoftwareSerial(_rx, _tx);
     LoRaNode->begin(9600);
-    SerialDebug.begin(9600);
     _timeDelay = 600;
 }
 
@@ -62,8 +61,8 @@ void LoRaAT::setDevAddr(String DevAddr) {
     _DevAddr = DevAddr;
     _DevAddr.toUpperCase();
 
-    #ifdef VerboseMode
-        SerialDebug.println("DevAddr: " + _DevAddr);
+    #if LogLevel > 0
+        std::cout << "\nDevAddr: " << _DevAddr;
     #endif
 }
 
@@ -72,8 +71,8 @@ void LoRaAT::setDevEui(String DevEui) {
     _DevEui = DevEui;
     _DevEui.toUpperCase();
     
-    #ifdef VerboseMode
-        SerialDebug.println("DevEui: " + _DevEui);
+    #if LogLevel > 0
+        std::cout << "\nDevEui: " << _DevEui;
     #endif
 }
 
@@ -82,8 +81,8 @@ void LoRaAT::setAppEui(String AppEui) {
     _AppEui = AppEui;   
     _AppEui.toUpperCase();
 
-    #ifdef VerboseMode
-        SerialDebug.println("AppEui: " + _AppEui);
+    #if LogLevel > 0
+        std::cout << "\nAppEui: " << _AppEui;
     #endif
 }
 
@@ -92,8 +91,8 @@ void LoRaAT::setNwkSkey(String NwkSkey) {
     _NwkSkey = NwkSkey;
     _NwkSkey.toUpperCase();
 
-    #ifdef VerboseMode
-        SerialDebug.println("NwkSkey: " + _NwkSkey);
+    #if LogLevel > 0
+        std::cout << "\nNwkSkey: " << _NwkSkey;
     #endif
 }
 
@@ -102,8 +101,8 @@ void LoRaAT::setAppSkey(String AppSkey) {
     _AppSkey = AppSkey;
     _AppSkey.toUpperCase();
 
-    #ifdef VerboseMode
-        SerialDebug.println("AppSkey: " + _AppSkey);
+    #if LogLevel > 0
+        std::cout << "\nAppSkey: " << _AppSkey;
     #endif
 }
 
@@ -112,15 +111,15 @@ void LoRaAT::setKeys(String NwkSkey, String AppSkey) {
     _NwkSkey = NwkSkey;
     _NwkSkey.toUpperCase();
 
-    #ifdef VerboseMode
-        SerialDebug.println("NwkSkey: " + _NwkSkey);
+    #if LogLevel > 0
+        std::cout << "\nNwkSkey: " << _NwkSkey.c_str();
     #endif
 
     _AppSkey = AppSkey;
     _AppSkey.toUpperCase();
 
-    #ifdef VerboseMode
-        SerialDebug.println("AppSkey: " + _AppSkey);
+    #if LogLevel > 0
+        std::cout << "\nAppSkey: " << _AppSkey.c_str() << "\n";
     #endif
 }
 
@@ -129,22 +128,22 @@ void LoRaAT::setIDs(String DevAddr, String DevEui, String AppEui) {
     _DevAddr = DevAddr;
     _DevAddr.toUpperCase();
 
-    #ifdef VerboseMode
-        SerialDebug.println("DevAddr: " + _DevAddr);
+    #if LogLevel > 0
+        std::cout << "\nDevAddr: " << _DevAddr.c_str();
     #endif
 
     _DevEui = DevEui;
     _DevEui.toUpperCase();
 
-    #ifdef VerboseMode
-        SerialDebug.println("DevEui: " + _DevEui);
+    #if LogLevel > 0
+        std::cout << "\nDevEui: " << _DevEui.c_str();
     #endif
 
     _AppEui = AppEui;
     _AppEui.toUpperCase();
 
-    #ifdef VerboseMode
-        SerialDebug.println("AppEui: " + _AppEui);
+    #if LogLevel > 0
+        std::cout << "\nAppEui: " << _AppEui.c_str() << "\n";
     #endif
 }
 
@@ -154,7 +153,7 @@ void LoRaAT::setTimeDelay(int timeDelay) {
     if (timeDelay >= 400) {
         _timeDelay = timeDelay;
     }else {
-        SerialDebug.println("\nError: timeDelay < 400, using default configuration (600ms).");
+        std::cout << "\nError: timeDelay < 400, using default configuration (600ms).";
     }    
 }
 
@@ -166,8 +165,8 @@ void LoRaAT::watchdogRst() {
 
 void LoRaAT::sendCmd(String cmd) {
     // Function responsable to send the command received to the node
-    #ifdef DebugMode
-        SerialDebug.println(cmd);
+    #if LogLevel > 1
+        std::cout << cmd;
     #endif
     LoRaNode->flush();
     LoRaNode->print(cmd); 
@@ -175,20 +174,33 @@ void LoRaAT::sendCmd(String cmd) {
     waitMsg();
 }
 
+void LoRaAT::sendATCmd(String cmd) {
+    // Function responsable to send the command received to the node
+    #if LogLevel > 1
+        std::cout << cmd;
+    #endif
+    LoRaNode->flush();
+    LoRaNode->print(cmd); 
+}
+
 void LoRaAT::waitMsg() {
     // Function responsable for waiting a response to the sented message
     delay(_timeDelay);
+    String received = "";
+    char rcv;
 
-    
     while (LoRaNode->available()) {
-        #ifdef DebugMode
-            SerialDebug.write(LoRaNode->read());
-        #endif
+        rcv = LoRaNode->read();
+        received += rcv;
     }
 
-    #ifdef DebugMode
-        SerialDebug.println("");
+    #if LogLevel > 1
+        if (received != "") {
+            std::cout << received.c_str() << "\n";
+        }
     #endif
+    
+    received = "";
 
     delay(300);
 
@@ -197,31 +209,36 @@ void LoRaAT::waitMsg() {
 
 void LoRaAT::config() {
     // Configuration function
-    #ifdef VerboseMode
-        SerialDebug.println("\nConfig Started...\n\nConfiguring ID Keys...");
+    #if LogLevel > 0
+        std::cout << "\nConfig Started...\n\nConfiguring ID Keys...";
     #endif
 
     /**
      * Config ID Keys
      */
     
+    watchdogRst();
     sendCmd("AT");
     if(_DevAddr != ""){
         sendCmd("AT+ID=DevAddr, " + _DevAddr);
     }
     
+    watchdogRst();
     if(_DevEui != "") {
         sendCmd("AT+ID=DevEui, " + _DevEui);
     }
 
+    watchdogRst();
     if(_AppEui != "") {
         sendCmd("AT+ID=AppEui, " + _AppEui);
     }
 
+    watchdogRst();
     if(_NwkSkey != ""){
         sendCmd("AT+KEY=NWKSKEY, " + _NwkSkey);
     }
 
+    watchdogRst();
     if(_AppSkey != ""){
         sendCmd("AT+KEY=APPSKEY, " + _AppSkey);
     }
@@ -229,16 +246,21 @@ void LoRaAT::config() {
     /**
      * Calling the functions responsables to configure DR (DataRate) and CH (Channels)
      */
+    watchdogRst();
     DRConfig();
+    watchdogRst();
     CHConfig();
+    watchdogRst(); 
 
-    
+    #if LogLevel > 0
+        std::cout << "\nConfig Finished....";
+    #endif   
 } // end config
 
 void LoRaAT::DRConfig() {
     // Data Rate Configuration function
-    #ifdef VerboseMode
-        SerialDebug.print("\nConfiguring ports and channels...");
+    #if LogLevel > 0
+        std::cout << "\nConfiguring ports and DR...";
     #endif
 
     watchdogRst();
@@ -246,10 +268,12 @@ void LoRaAT::DRConfig() {
     sendCmd("AT+PORT=1");
 
     // Turn ADR (Adaptive Data Rate) On
+    watchdogRst();
     sendCmd("AT+ADR=ON");
     sendCmd("AT");
 
     // Set the AU915 DR Scheme
+    watchdogRst();
     sendCmd("AT+DR=AU915");
     
     delay(200);
@@ -257,8 +281,8 @@ void LoRaAT::DRConfig() {
 
 void LoRaAT::CHConfig() {
     // Set up the 8 channels of AU915 Frequency Plan
-    #ifdef VerboseMode
-        SerialDebug.print("\nSetting up channels....");
+    #if LogLevel > 0
+        std::cout << "\nSetting up channels....";
     #endif
 
     watchdogRst();
@@ -282,32 +306,25 @@ void LoRaAT::CHConfig() {
     delay(100);
     watchdogRst();
 
+    #if LogLevel > 0
+        std::cout << "\n8 primary channels configured...\nCleaning unused channels...";
+    #endif
+
     // Deleting the unused channels that the DR US915 has set up
     for(int cont=8; cont < 73; cont++) {
         sendCmd("AT+CH=" + String(cont) + ",0");
         delay(100);
         if(cont%4 == 0) {
             watchdogRst();
+            if (cont != 8 && cont%8 == 0) {
+                std::cout << "\n" << cont << " channels configured...";
+            }
         }
     }
-    #ifdef VerboseMode
-        SerialDebug.println("Channels settup finished....");
-        
-        SerialDebug.println("\nConfig Finished...\n");
+    #if LogLevel > 0
+        std::cout << "\nChannels settup finished....\n";
     #endif
 } // end CHConfig
-
-void LoRaAT::loop() {
-    // Function to send and receive messages via Serial Console
-    while(SerialDebug.available())
-    { 
-        LoRaNode->write(Serial.read());
-    }
-    while(LoRaNode->available())
-    {
-        SerialDebug.write(LoRaNode->read());
-    }
-} // end loop
 
 void LoRaAT::sendMsg(String msg) {
     // Send Message Function
@@ -336,20 +353,25 @@ void LoRaAT::sendCMsgHex(String msg) {
 String LoRaAT::waitAnsMsg() {
     // Function responsable to wait for the node answer and return it
     LoRaNode->flush();
-
+    
+    watchdogRst();
     delay(_timeDelay*2);
 
     String response = "";
-    char temp;
+    char rcv;
 
-    while (LoRaNode->available()) {
-        loraread:
-        #ifdef DebugMode
-            SerialDebug.write(LoRaNode->read());
-        #endif
-        temp = LoRaNode->read();
-        response += temp;
+    while (LoRaNode->available()) {   
+        while (LoRaNode->available()) {
+            rcv = LoRaNode->read();
+            response += rcv;
+        }
+
+        delay(_timeDelay);
     }
+
+    #if LogLevel > 1
+            std::cout << response.c_str();
+    #endif
 
     return response;
 }
@@ -365,6 +387,7 @@ bool LoRaAT::waitACK() {
     int x = 0, y = 0;
 
     while (true) {
+        watchdogRst();
         while (LoRaNode->available()) {
             temp = LoRaNode->read();
             response += temp;
@@ -373,8 +396,8 @@ bool LoRaAT::waitACK() {
         for (int i = 0; i < response.length(); i++) {
             if(response.charAt(i) == ans.charAt(x)){
                 if (x == ans.length()-1) {
-                    #ifdef DebugMode
-                        SerialDebug.println(response);
+                    #if LogLevel > 1
+                        std::cout << response.c_str();
                     #endif
 
                     return true;
@@ -383,10 +406,11 @@ bool LoRaAT::waitACK() {
                 }
             }
 
+            watchdogRst();
             if(response.charAt(i) == done.charAt(y)) {
                 if (y == done.length()-1) {
-                    #ifdef DebugMode
-                        SerialDebug.println(response);
+                    #if LogLevel > 1
+                        std::cout << response.c_str();
                     #endif
 
                     return false;
@@ -403,13 +427,13 @@ bool LoRaAT::waitACK() {
 bool LoRaAT::compare(String cmd, String ans) {
     // Function responsable to do the comparison between the actual configuration
     // and the desired one
-    #ifdef DebugMode
-        SerialDebug.println(cmd);
+    #if LogLevel > 1
+        std::cout << cmd;
     #endif
     LoRaNode->flush();
     LoRaNode->print(cmd); 
 
-    delay(900);
+    delay(_timeDelay*2);
     
     String response = "";
     char temp;
@@ -421,25 +445,23 @@ bool LoRaAT::compare(String cmd, String ans) {
 
     int x = 0;
 
-    #ifdef DebugMode
-        SerialDebug.println("\n----------------------------------------\n");
-        SerialDebug.println("Debug: \nReceived: " + response + "\nTo Compare: " + ans);
+    #if LogLevel > 1
+        std::cout << "\n----------------------------------------\nDebug: \nReceived: " << response.c_str() << "\nTo Compare: " << ans.c_str();
     #endif
 
     for (int i = 0; i < response.length(); i++) {
         if(response.charAt(i) == ans.charAt(x)){
             if (x == ans.length()-1) {
                 LoRaNode->flush();
+                #if LogLevel > 1
+                    std::cout << "\n\nResult: ";
+                #endif
                 return true;
             }else {
                 x++;
             }
         }
     }
-
-    #ifdef DebugMode
-        SerialDebug.println("\n\nx: " + String(x) + "  -  ans: " + ans.length() + "\n----------------------------------------\n");
-    #endif
 
     LoRaNode->flush();
     waitMsg();
@@ -451,26 +473,26 @@ bool LoRaAT::testConfig() {
     // If is not configured the Function will configure it
     int ok = 0, ntest = 0, fail = 0;
 
-    #ifdef VerboseMode
-        SerialDebug.println("\n----------------------------------------\n        Starting Config Test:\n");
+    #if LogLevel > 0
+        std::cout << "\n----------------------------------------\n        Starting Config Test:\n\n";
     #endif
 
     watchdogRst();
     if(_DevAddr != "") {
-        #ifdef VerboseMode
-            SerialDebug.print("DevAddr: ");
+        #if LogLevel > 0
+            std::cout << "DevAddr: ";
         #endif
 
         if (compare("at+id=devaddr", "+ID: DevAddr, " + _DevAddr)) {
-            #ifdef VerboseMode
-                SerialDebug.print("pass");
+            #if LogLevel > 0
+                std::cout << "pass";
             #endif
 
             ok++;
             ntest++;
         }else {
-            #ifdef VerboseMode
-                SerialDebug.print("fail\nReconfiguring DevAddr....");
+            #if LogLevel > 0
+                std::cout << "fail\nReconfiguring DevAddr....";
             #endif
 
             sendCmd("at+id=devaddr, " + _DevAddr);
@@ -480,67 +502,72 @@ bool LoRaAT::testConfig() {
 
     watchdogRst();
     if(_DevEui != "") {
-        #ifdef VerboseMode
-            SerialDebug.print("\nDevEui: ");
+        #if LogLevel > 0
+            std::cout << "\nDevEui: ";
         #endif
 
         if (compare("at+id=deveui", "+ID: DevEui, " + _DevEui)) {
-            #ifdef VerboseMode
-                SerialDebug.print("pass");
+            #if LogLevel > 0
+                std::cout << "pass";
             #endif
 
             ok++;
             ntest++;
         }else {
-            #ifdef VerboseMode
-                SerialDebug.print("fail\nReconfiguring DevEui....");
+            #if LogLevel > 0
+                std::cout << "fail\nReconfiguring DevEui....";
             #endif
 
             sendCmd("at+id=deveui, " + _DevEui);
             ntest++;
         }
+        #if LogLevel > 1
+            std::cout << "\n----------------------------------------\n";
+        #endif
     }
 
     watchdogRst();
     if(_AppEui != "") {
-        #ifdef VerboseMode
-            SerialDebug.print("\nAppEui: ");
+        #if LogLevel > 0
+            std::cout << "\nAppEui: ";
         #endif
 
         if (compare("at+id=appeui", "+ID: AppEui, " + _AppEui)) {
-            #ifdef VerboseMode
-                SerialDebug.print("pass");
+            #if LogLevel > 0
+                std::cout << "pass";
             #endif
 
             ok++;
             ntest++;
         }else {
-            #ifdef VerboseMode
-                SerialDebug.print("fail\nReconfiguring AppEui....");
+            #if LogLevel > 0
+                std::cout << "fail\nReconfiguring AppEui....";
             #endif
 
             sendCmd("at+id=appeui, " + _AppEui);
             ntest++;
         }
+        #if LogLevel > 1
+            std::cout << "\n----------------------------------------\n";
+        #endif
     }
 
     watchdogRst();
     if(_NwkSkey != ""){
-        #ifdef VerboseMode
-            SerialDebug.print("\nNwkSKey: pass");
+        #if LogLevel > 0
+            std::cout << "\nNwkSKey: pass";
         #endif
 
         sendCmd("AT+KEY=NWKSKEY, " + _NwkSkey);
         ok++;
         ntest++;
         delay(100);
-
     }
 
     watchdogRst();
     if(_AppSkey != ""){
-        #ifdef VerboseMode
-            SerialDebug.print("\nAppSKey: pass");
+        #if LogLevel > 0
+            std::cout << "\nAppSKey: pass";
         #endif
         
         sendCmd("AT+KEY=APPSKEY, " + _AppSkey);
@@ -550,40 +577,44 @@ bool LoRaAT::testConfig() {
     }
 
     watchdogRst();
-    #ifdef VerboseMode
-        SerialDebug.print("\nDR: ");
+    #if LogLevel > 0
+        std::cout << "\nDR: ";
     #endif
     if (compare("at+dr", "+DR: DR0\n+DR: AU915 DR0  SF12 BW125K")){
-        #ifdef VerboseMode
-            SerialDebug.print("pass");
+        #if LogLevel > 0
+            std::cout << "pass";
         #endif
 
         ok++;
         ntest++;
     }else {
-        #ifdef VerboseMode
-            SerialDebug.print("fail\nReconfiguring DR....");
+        #if LogLevel > 0
+            std::cout << "fail\nReconfiguring DR....";
         #endif
         
         DRConfig();
         ntest++;
     }
 
+    #if LogLevel > 1
+        std::cout << "\n----------------------------------------\n";
+    #endif
+
     watchdogRst();
     delay(300);
-    #ifdef VerboseMode
-        SerialDebug.print("\nCH: ");
+    #if LogLevel > 0
+        std::cout << "\nCH: ";
     #endif
     if (compare("at+ch", "+CH: 8; 0,916800000")) {
-        #ifdef VerboseMode
-            SerialDebug.print("pass");
+        #if LogLevel > 0
+            std::cout << "pass";
         #endif
 
         ok++;
         ntest++;
     }else {
-        #ifdef VerboseMode
-            SerialDebug.print("fail\nReconfiguring CH....");
+        #if LogLevel > 0
+            std::cout << "fail\nReconfiguring CH....";
         #endif
 
         CHConfig();
@@ -591,21 +622,21 @@ bool LoRaAT::testConfig() {
     }
 
     fail = ntest - ok;
-    #ifdef VerboseMode
-        SerialDebug.println("\n----------------------------------------\n | Tests: " + String(ntest) + " | Passed: " + String(ok) + " | Failed: " + String(fail) + " |\n----------------------------------------\n");
+    #if LogLevel > 0
+        std::cout << "\n----------------------------------------\n | Tests: " << ntest << " | Passed: " << ok << " | Failed: " << fail << " |\n----------------------------------------\n";
     #endif
 
     watchdogRst();
     if(fail > 0){
-        #ifdef VerboseMode
-            SerialDebug.println("Errors found, restarting Config Test....");
+        #if LogLevel > 0
+            std::cout << "Errors found, restarting Config Test....\n----------------------------------------\n\n";
         #endif
 
         if (configCount < MaxConfigTry) {
             configCount++;
         }else {
-            #ifdef VerboseMode
-                SerialDebug.println("ERROR: Problems found during config test, please check the node and the communication.");
+            #if LogLevel > 0
+                std::cout << "ERROR: Problems found during config test, please check the node and the communication.";
             #endif
             return false;
         }
