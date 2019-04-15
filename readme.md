@@ -133,7 +133,7 @@ lora.sendCMsgHex(String msg) | Send String Confirmed HEX Message <br> Envia Mens
 
 ***
 ## Log Level
-(en) The LogLevel definition is used to determine whether data/debugging will be sent by serial  
+(en) The LogLevel definition is used to determine whether data/debug will be sent by serial  
 (pt-br) A definição LogLevel é usada para determinar se os dados/debug serão enviados por serial
 
 Valor | Description <br> Descrição
