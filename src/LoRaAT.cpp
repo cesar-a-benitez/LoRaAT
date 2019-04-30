@@ -316,9 +316,11 @@ void LoRaAT::CHConfig() {
         delay(100);
         if(cont%4 == 0) {
             watchdogRst();
-            if (cont != 8 && cont%8 == 0) {
-                std::cout << "\n" << cont << " channels configured...";
-            }
+            #if LogLevel > 0
+                if (cont != 8 && cont%8 == 0) {
+                    std::cout << "\n" << cont << " channels configured...";
+                }
+            #endif
         }
     }
     #if LogLevel > 0
