@@ -1,7 +1,7 @@
 #include <LoRaAT.h>
 
-#define RX D5 // change to the desired RX port
-#define TX D6 // change to the desired TX port
+#define RX 12 // change to the desired RX port
+#define TX 13 // change to the desired TX port
 
 LoRaAT lora(RX,TX);
 String DevAddr = "00000000";
