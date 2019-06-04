@@ -1,7 +1,7 @@
 # LoRa AT Library
 
-[![license](https://img.shields.io/github/license/desktop/desktop.svg?style=flat-square)](https://github.com/desktop/desktop/blob/development/LICENSE)
- 
+[![License](https://img.shields.io/github/license/desktop/desktop.svg?style=flat-square)](https://github.com/desktop/desktop/blob/development/LICENSE)
+
 Library created by: Cesar Augusto B. Barbosa e Thiago Piovesan  
 Latin American Center for Open Technologies (CELTAB)    
 Itaipu Technological Park (PTI)

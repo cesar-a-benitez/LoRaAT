@@ -17,12 +17,9 @@ env:
 before_install:
    - source <(curl -SLs https://raw.githubusercontent.com/adafruit/travis-ci-arduino/master/install.sh)
 
-<<<<<<< HEAD
 install:
    - arduino --install-library "SoftwareSerial"
 
-=======
->>>>>>> 0f3876a84bc575c221adef250ce8a3533db17905
 script:
    - build_main_platforms
 
