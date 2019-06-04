@@ -1,6 +1,9 @@
 #include <LoRaAT.h>
 
-LoRaAT lora(rx,tx);
+#define RX D5 // change to the desired RX port
+#define TX D6 // change to the desired TX port
+
+LoRaAT lora(RX,TX);
 String DevAddr = "00000000";
 String DevEui = "0000000000000000";
 String AppEui = "0000000000000000";
