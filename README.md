@@ -1,11 +1,12 @@
-# LoRa AT Library
+# LoRaAT Library
 
 [![Version](https://img.shields.io/github/release/cesar-a-benitez/LoRaAT.svg?style=plastic)](https://github.com/cesar-a-benitez/LoRaAT/releases/tag/v2.0)
 [![LatestReleaseDate](https://img.shields.io/github/release-date/cesar-a-benitez/LoRaAT.svg?style=plastic)]((https://github.com/cesar-a-benitez/LoRaAT/releases/tag/v2.0))
 ![Issues](https://img.shields.io/github/issues/cesar-a-benitez/LoRaAT.svg?style=plastic)
 [![License](https://img.shields.io/github/license/desktop/desktop.svg?style=plastic)](https://github.com/desktop/desktop/blob/development/LICENSE)
 ![Repo Size](https://img.shields.io/github/repo-size/cesar-a-benitez/LoRaAT.svg?style=plastic)
-
+[![Contact](https://img.shields.io/badge/Contact-E--mail-informational.svg?style=plastic)](mailto:cesar.augusto@ecomp.ufsm.br?subject=Contact%20LoRaAT%20Library)
+![Follow](https://img.shields.io/github/followers/cesar-a-benitez.svg?label=Follow&style=social)
 
 
 Library created by: Cesar Augusto B. Barbosa e Thiago Piovesan  
