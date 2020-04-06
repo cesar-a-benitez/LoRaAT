@@ -16,7 +16,7 @@ Itaipu Technological Park (PTI)
 
 ## Sumary (Sumário)
 
-- [LoRaAT Library](#loraat-library)
+  - [LoRaAT Library](#loraat-library)
   - [Sumary (Sumário)](#sumary-sum%c3%a1rio)
   - [About Library (Sobre a Biblioteca)](#about-library-sobre-a-biblioteca)
   - [How to Use (Como Usar)](#how-to-use-como-usar)
