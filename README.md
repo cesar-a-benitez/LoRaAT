@@ -16,12 +16,14 @@ Itaipu Technological Park (PTI)
 
 ## Sumary (Sumário)
 
-* [About Library (Sobre a Biblioteca)](#about-library-(sobre-a-biblioteca))
-* [How to Use (Como Usar)](#how-to-use-(como-usar))
-* [Sending Messages (Enviando Mensagens)](#sending-messages-(enviando-mensagens))
-* [Enable Watchdog (Habilitar Watchdog)](#enable-watchdog-(habilitar-watchdog))
-* [Log Level](#log-level)
-* [Functions List (Lista de Funções)](#functions-list-(lista-de-funções))
+- [LoRaAT Library](#loraat-library)
+  - [Sumary (Sumário)](#sumary-sum%c3%a1rio)
+  - [About Library (Sobre a Biblioteca)](#about-library-sobre-a-biblioteca)
+  - [How to Use (Como Usar)](#how-to-use-como-usar)
+  - [Sending Messages (Enviando Mensagens)](#sending-messages-enviando-mensagens)
+  - [Enable Watchdog (Habilitar Watchdog)](#enable-watchdog-habilitar-watchdog)
+  - [Log Level](#log-level)
+  - [Functions List (Lista de Funções)](#functions-list-lista-de-fun%c3%a7%c3%b5es)
 
 ## About Library (Sobre a Biblioteca)
 
