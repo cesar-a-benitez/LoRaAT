@@ -8,13 +8,23 @@
 [![Contact](https://img.shields.io/badge/Contact-E--mail-informational.svg?style=plastic)](mailto:cesar.augusto@ecomp.ufsm.br?subject=Contact%20LoRaAT%20Library)
 ![Follow](https://img.shields.io/github/followers/cesar-a-benitez.svg?label=Follow&style=social)
 
-
 Library created by: Cesar Augusto B. Barbosa e Thiago Piovesan  
-Latin American Center for Open Technologies (CELTAB)    
+Latin American Center for Open Technologies (CELTAB)  
 Itaipu Technological Park (PTI)
 
 ***
-## About Library (Sobre a Biblioteca):
+
+## Sumary (Sumário)
+
+* [About Library (Sobre a Biblioteca)](#about-library-(sobre-a-biblioteca))
+* [How to Use (Como Usar)](#how-to-use-(como-usar))
+* [Sending Messages (Enviando Mensagens)](#sending-messages-(enviando-mensagens))
+* [Enable Watchdog (Habilitar Watchdog)](#enable-watchdog-(habilitar-watchdog))
+* [Log Level](#log-level)
+* [Functions List (Lista de Funções)](#functions-list-(lista-de-funções))
+
+## About Library (Sobre a Biblioteca)
+
   (en)
     This Library was designed to configure and use any LoRaWAN node
     that uses AT commands.
@@ -26,12 +36,11 @@ Itaipu Technological Park (PTI)
       
     Known Bugs:
       - The testConfig Function doesn't work in Arduino Nano, it'll always reconfigure the node
-          
 
   (pt-br)
     Esta Biblioteca foi desenvolvida para configurar e usar qualquer
     nó LoRaWAN que use comandos AT.
- 
+
     Notas:
       - Esta Biblioteca foi idealizada para configurar nós no Plano de Frequência AU915
       - A Biblioteca inicia a Comunicação Serial com um baud rate de 9600, se você inicar
@@ -39,49 +48,50 @@ Itaipu Technological Park (PTI)
       
     Bugs Conhecidos:
       - A Função testConfig não funciona no Arduino Nano, ele sempre irá reconfigurar o nó
-          
 
-***
-## How to use (Como usar):
+## How to Use (Como Usar)
+
   1. (en) Download the library and import it into the Arduino IDE  
      (pt-br) Baixe a biblioteca e importe-a para o Arduino IDE
-      
+
   2. (en) Add the library into your code  
      (pt-br) Adicione a biblioteca ao código fonte
-      
+
    ```cpp
-	#include <LoRaAT.h>
+      #include <LoRaAT.h>
    ```
+
   3. (en) Create an object  
      (pt-br) Crie um objeto
-     
+
    ```cpp
-	{
-	   LoRaAT lora(rx, tx);
-	}
+   {
+      LoRaAT lora(rx, tx);
+   }
    ```
+
     Notes (Notas):
       (en) At the creation of the object you will need to set the Rx and Tx ports that you want to use
       (pt-br) Na criação do objeto você precisará definir quais são as portas Rx e Tx que deseja usar
   
   4.  (en) In order to start the object you'll have to use the init function  
        (pt-br) Para que se possa iniciar o objeto você deverá usar a função init
-       
+
    ```cpp
    {
       lora.init();
    }
    ```
-   
+
   5. (en) You will have to create the Keys and IDs Strings, and then pass it to the object  
      (pt-br) Você terá de criar as Strings de Chaves e IDs, e então passa-las para o objeto
-     
+
    ```cpp
    {
       String DevAddr = "XXXXXXXX";
       String DevEui  = "XXXXXXXXXXXXXXXX";
       String AppEui  = "XXXXXXXXXXXXXXXX";
-    
+
        /**
         *    (en) 
         *       You can either pass it at once, using the function setIDs and/or setKeys
@@ -91,17 +101,18 @@ Itaipu Technological Park (PTI)
         *       Você pode tanto passar todas de uma vez usando as funções setIDs e/ou setKeys
         *       Como você também pode passar individualmente
         */
-    
+
       lora.setIDs(DevAddr, DevEui, AppEui) // Passing the IDs together - Passando os IDs juntos
-     
+
       lora.setDevAddr(DevAddr); // Passing the DevAddr to the object - Passando o DevAddr para o objeto
       lora.setDevEui(DevEui);   // Passing the DevEui to the object - Passando o DevEui para o objeto
       lora.setAppEui(AppEui);   // Passing the AppEui to the object - Passando o AppEui para o objeto
    }
    ```
+
    6. (en) To configure the node you'll have to use the config function or the testConfig function  
       (pt-br) Para configurar o nó você deve usar a função config ou a função testConfig
-   
+
    ```cpp
    {
       lora.config();    // Function to configure the node - Função para configurar o nó
@@ -109,23 +120,24 @@ Itaipu Technological Park (PTI)
                         // Função para testar as configurações e reconfigurar se necessário
    }
    ```
-   
-***
-## Sending Messages (Enviando Mensagens):
-   (en)  
-   The Library supports 4 types of messages to send:  
-   * String Message  
-   * String Confirmed Message  
-   * String HEX Message  
-   * String Confirmed HEX Message  
-   
-   (pt-br)  
-   A Biblioteca suporta 4 tipos de mensagens para enviar:  
-   * Mensagem String  
-   * Mensagem String Confirmada  
-   * Mensagem String HEX  
-   * Mensagem String HEX Confirmada
-   
+
+## Sending Messages (Enviando Mensagens)
+
+(en)  
+The Library supports 4 types of messages to send:
+
+* String Message  
+* String Confirmed Message  
+* String HEX Message  
+* String Confirmed HEX Message  
+
+(pt-br)  
+A Biblioteca suporta 4 tipos de mensagens para enviar:  
+* Mensagem String  
+* Mensagem String Confirmada  
+* Mensagem String HEX  
+* Mensagem String HEX Confirmada
+
 Function <br> Função | Description <br> Descrição
 ----------------|-----------------------
 lora.sendMsg(String msg) | Send String Message <br> Envia Mensagem String
@@ -133,16 +145,17 @@ lora.sendCMsg(String msg) | Send String Confirmed Message <br> Envia Mensagem St
 lora.sendMsgHex(String msg) | Send String Hex Message <br> Envia Mensagem String HEX
 lora.sendCMsgHex(String msg) | Send String Confirmed HEX Message <br> Envia Mensagem String HEX Confirmada
 
-***
-## Enable Watchdog
+## Enable Watchdog (Habilitar Watchdog)
+
 (en) To enable Watchdog, just uncomment the definition below, this function uses the ESP8266WiFi.h library  
 (pt-br) Para habilitar o Watchdog é apenas descomentar a definição abaixo, esta função usa a biblioteca ESP8266WiFi.h
+
 ``` cpp
    #define Watchdog
 ```
 
-***
 ## Log Level
+
 (en) The LogLevel definition is used to determine whether data/debug will be sent by serial  
 (pt-br) A definição LogLevel é usada para determinar se os dados/debug serão enviados por serial
 
@@ -152,8 +165,7 @@ Valor | Description <br> Descrição
 1 | Only status sent by serial <br> Apenas status enviado por serial
 2 | Debug data sent by serial <br> Dados de debug enviado por serial
 
-***
-## Functions List (Lista de Funções):
+## Functions List (Lista de Funções)
 
 (en) Table of Object Configuration Functions  
 (pt-br) Tabela de Funções de Configuração de Objeto  
